@@ -19,6 +19,15 @@
     <string>address1_line1</string>
   </SerializedBindings>
   <MaxColumns>0</MaxColumns>
+  <TemplateSelectorRule><![CDATA[<?xml version="1.0"?><Workflow e="true" isvalid="true" syntaxVersion="11" version="0">
+  <function e="false">
+    <var>Shared.address</var>
+    <func>Concat3</func>
+    <arg>var:Entity.address1_line1</arg>
+    <arg>String:,  </arg>
+    <arg>var:Entity.address1_postalcode</arg>
+  </function>
+</Workflow>]]></TemplateSelectorRule>
   <Fetch version="1.0">
     <entity name="account"/>
   </Fetch>
