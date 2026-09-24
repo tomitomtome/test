@@ -6,6 +6,72 @@
   <IsBulkUpdateForm>false</IsBulkUpdateForm>
   <CacheMode>-1</CacheMode>
   <UiSyncGuardMode>-1</UiSyncGuardMode>
+  <WorkflowLoad><![CDATA[<?xml version="1.0"?><Workflow e="true" isvalid="true" syntaxVersion="11" version="0">
+  <branch e="true" info="">
+    <if e="true">
+      <conditions e="true" op="And">
+        <condition e="false">
+          <var>Entity.ownerid</var>
+          <op>DoesNotContainData</op>
+        </condition>
+        <condition e="false">
+          <var>Entity.createdon</var>
+          <op>DoesNotContainData</op>
+        </condition>
+      </conditions>
+      <action>
+        <function e="false">
+          <var>Entity.ownerid</var>
+          <func>Assign</func>
+          <arg>var:Configuration.systemuserid</arg>
+        </function>
+      </action>
+    </if>
+  </branch>
+  <branch e="true" info="">
+    <if e="true">
+      <conditions e="true" op="And">
+        <condition e="false">
+          <var>Entity.IsNew</var>
+          <op>Equal</op>
+          <arg>Boolean:True</arg>
+        </condition>
+      </conditions>
+      <action>
+        <function e="false">
+          <var>Form.^Create new order .IsVisible</var>
+          <func>Assign</func>
+          <arg>Boolean:False</arg>
+        </function>
+        <function e="false">
+          <var>Form.^Create new appointment.IsVisible</var>
+          <func>Assign</func>
+          <arg>Boolean:False</arg>
+        </function>
+      </action>
+    </if>
+    <if e="true">
+      <conditions e="true" op="And"/>
+      <action>
+        <function e="false">
+          <var>Form.^Create new order .IsVisible</var>
+          <func>Assign</func>
+          <arg>Boolean:True</arg>
+        </function>
+        <function e="false">
+          <var>Form.^Create new appointment.IsVisible</var>
+          <func>Assign</func>
+          <arg>Boolean:True</arg>
+        </function>
+      </action>
+    </if>
+  </branch>
+  <function e="false">
+    <var>Tabs.(activity.regardingobjectid.account).IsVisible</var>
+    <func>Assign</func>
+    <arg>Boolean:False</arg>
+  </function>
+</Workflow>]]></WorkflowLoad>
   <WorkflowButtonCommand><![CDATA[<?xml version="1.0"?><Workflow e="true" isvalid="true" syntaxVersion="11" version="0">
   <branch e="true" info="2020Q2 - Create a new order button">
     <if e="true">
