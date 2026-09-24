@@ -1,0 +1,3 @@
+JSBridge openDocument test
+
+If you can read this text, MobileCRM.Platform.openDocument successfully opened a plain-text document.

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OS and device test</title>
+  <script src="JSBridge.js"></script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    p {
+      margin: 0 0 20px;
+    }
+
+    button {
+      min-height: 44px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 4px;
+      background: #0067b8;
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    dl {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 8px 16px;
+      margin: 20px 0;
+    }
+
+    dt {
+      font-weight: 600;
+    }
+
+    dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+
+    #status {
+      margin-top: 20px;
+      padding: 12px;
+      border-left: 4px solid #777;
+      background: color-mix(in srgb, CanvasText 6%, Canvas);
+    }
+
+    #status.success {
+      border-color: #16803a;
+    }
+
+    #status.error {
+      border-color: #c42b1c;
+    }
+
+    pre {
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>OS and device test</h1>
+    <p>Read the current device information through <code>MobileCRM.Platform</code>.</p>
+    <button id="detect" type="button">Detect OS and device</button>
+    <div id="status" role="status">Ready.</div>
+    <dl hidden id="summary">
+      <dt>OS / platform</dt>
+      <dd id="platform-name">Unknown</dd>
+      <dt>Device identifier</dt>
+      <dd id="device-id">Unavailable</dd>
+      <dt>Capabilities</dt>
+      <dd id="capabilities">Unavailable</dd>
+    </dl>
+    <pre id="details" aria-live="polite"></pre>
+  </main>
+
+  <script>
+    (function () {
+      var button = document.getElementById("detect");
+      var status = document.getElementById("status");
+      var summary = document.getElementById("summary");
+      var details = document.getElementById("details");
+
+      function displayValue(value, fallback) {
+        if (value === undefined || value === null || value === "") {
+          return fallback;
+        }
+        return typeof value === "object" ? JSON.stringify(value) : String(value);
+      }
+
+      function finish(message, className) {
+        button.disabled = false;
+        status.className = className;
+        status.textContent = message;
+      }
+
+      button.addEventListener("click", function () {
+        button.disabled = true;
+        summary.hidden = true;
+        details.textContent = "";
+        status.className = "";
+        status.textContent = "Calling MobileCRM.Platform.requestObject...";
+
+        if (!window.MobileCRM || !MobileCRM.Platform || typeof MobileCRM.Platform.requestObject !== "function") {
+          finish("MobileCRM.Platform.requestObject is unavailable.", "error");
+          return;
+        }
+
+        MobileCRM.Platform.requestObject(
+          function (platform) {
+            document.getElementById("platform-name").textContent = displayValue(platform.platformName, "Unknown");
+            document.getElementById("device-id").textContent = displayValue(platform.deviceIdentifier, "Unavailable");
+            document.getElementById("capabilities").textContent = displayValue(platform.capabilities, "Unavailable");
+            summary.hidden = false;
+
+            try {
+              details.textContent = "Full platform object:\n" + JSON.stringify(platform, null, 2);
+            } catch (error) {
+              details.textContent = "The full platform object could not be serialized: " + String(error);
+            }
+
+            finish("Platform information loaded successfully.", "success");
+          },
+          function (error) {
+            finish("Platform call failed: " + String(error || "Unknown error"), "error");
+          }
+        );
+      });
+    }());
+  </script>
+</body>
+</html>

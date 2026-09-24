@@ -1,0 +1,111 @@
+﻿<EntityList>
+  <Attributes>
+    <EntityName>serviceappointment</EntityName>
+    <CamelCase>ServiceAppointment</CamelCase>
+    <WrapperClass>MobileCrm.Model.ActivityListItem</WrapperClass>
+    <VisualStudioProjectId>00000000-0000-0000-0000-000000000000</VisualStudioProjectId>
+    <ClassBinding>
+      <SerializedClassBinding name="#DateLabel" label="DateLabel" type="String"/>
+      <SerializedClassBinding name="#End" label="End" type="String"/>
+      <SerializedClassBinding name="#Icon" label="Icon" type="String"/>
+      <SerializedClassBinding name="#IsDirty" label="IsDirty" type="String"/>
+      <SerializedClassBinding name="#Start" label="Start" type="String"/>
+    </ClassBinding>
+  </Attributes>
+  <Name>My Service Activities</Name>
+  <Kind>List</Kind>
+  <IsDefault>true</IsDefault>
+  <AutoWideWidth>0</AutoWideWidth>
+  <OrderBy>scheduledstart</OrderBy>
+  <SerializedBindings>
+    <string>ownerid</string>
+    <string>regardingobjectid</string>
+    <string>scheduledend</string>
+    <string>scheduledstart</string>
+    <string>activityid</string>
+    <string>statecode</string>
+    <string>statuscode</string>
+    <string>subject</string>
+  </SerializedBindings>
+  <MaxColumns>0</MaxColumns>
+  <Fetch version="1.0">
+    <entity name="serviceappointment">
+      <filter type="and">
+        <condition attribute="statecode" operator="in">
+          <value>0</value>
+          <value>3</value>
+        </condition>
+      </filter>
+      <link-entity name="activityparty" from="activityid" to="activityid" link-type="inner" alias="L0">
+        <filter type="and">
+          <condition attribute="partyid" operator="eq-userid"/>
+          <condition attribute="participationtypemask" operator="in">
+            <value>10</value>
+            <value>9</value>
+          </condition>
+        </filter>
+      </link-entity>
+    </entity>
+  </Fetch>
+  <Search>
+    <attribute schema="subject" method="Contains"/>
+  </Search>
+  <SerializedTemplates>
+    <RowTemplate>
+      <DesignWidth>320</DesignWidth>
+      <DesignHeight>48</DesignHeight>
+      <Name>Default</Name>
+      <Width>320</Width>
+      <Height>70</Height>
+      <NextTemplateName>800px</NextTemplateName>
+      <SerializedChildren>
+        <CellTemplate SchemaName="subject">
+          <StyleName>primary</StyleName>
+          <Bounds>10,10,300,30</Bounds>
+          <CellKind>0</CellKind>
+          <Anchor>13</Anchor>
+        </CellTemplate>
+        <CellTemplate SchemaName="#DateLabel">
+          <StyleName>r_gray</StyleName>
+          <Bounds>150,40,160,20</Bounds>
+          <CellKind>0</CellKind>
+          <Anchor>12</Anchor>
+        </CellTemplate>
+        <CellTemplate SchemaName="regardingobjectid">
+          <StyleName>link</StyleName>
+          <Bounds>10,40,140,20</Bounds>
+          <CellKind>4</CellKind>
+          <Anchor>12</Anchor>
+        </CellTemplate>
+      </SerializedChildren>
+    </RowTemplate>
+    <RowTemplate>
+      <DesignWidth>320</DesignWidth>
+      <DesignHeight>48</DesignHeight>
+      <Name>800px</Name>
+      <Width>800</Width>
+      <Height>50</Height>
+      <SerializedChildren>
+        <CellTemplate SchemaName="subject">
+          <StyleName>primary</StyleName>
+          <Bounds>10,10,300,30</Bounds>
+          <CellKind>0</CellKind>
+          <Anchor>13</Anchor>
+        </CellTemplate>
+        <CellTemplate SchemaName="#DateLabel">
+          <StyleName>primary right</StyleName>
+          <Bounds>580,10,210,30</Bounds>
+          <CellKind>0</CellKind>
+          <Anchor>12</Anchor>
+        </CellTemplate>
+        <CellTemplate SchemaName="regardingobjectid">
+          <StyleName>primary link</StyleName>
+          <Bounds>320,10,250,30</Bounds>
+          <CellKind>4</CellKind>
+          <Anchor>12</Anchor>
+        </CellTemplate>
+      </SerializedChildren>
+    </RowTemplate>
+  </SerializedTemplates>
+  <CustomProperties/>
+</EntityList>

@@ -1,0 +1,64 @@
+﻿<fetchcollection>
+  <fetch version="1.0">
+    <entity name="account">
+      <filter type="and">
+        <condition attribute="statuscode" operator="ne" value="2"/>
+      </filter>
+    </entity>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="contact">
+      <filter type="and">
+        <condition attribute="statuscode" operator="ne" value="2"/>
+      </filter>
+    </entity>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="quote"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="salesorder"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="invoice"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="opportunity"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="email"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="phonecall"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="task"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="appointment"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="serviceappointment"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="incident"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="resco_usersettings">
+      <filter type="or">
+        <condition attribute="resco_kind" operator="like" value="App.%"/>
+        <condition attribute="resco_kind" operator="like" value="Global.%"/>
+      </filter>
+    </entity>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="product"/>
+  </fetch>
+  <fetch version="1.0">
+    <entity name="resco_mobilereport">
+      <filter type="and">
+        <condition attribute="statuscode" operator="eq" value="1"/>
+      </filter>
+    </entity>
+  </fetch>
+</fetchcollection>
